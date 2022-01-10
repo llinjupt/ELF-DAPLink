@@ -342,12 +342,12 @@ $ pyocd list
 
 ```
 $ pyocd list -t
-  Name                      Vendor                  Part Number                  Families                    Source
-----------------------------------------------------------------------------------------------------------------------
-  cc3220sf                  Texas Instruments       CC3220SF                                                 builtin
-  cortex_m                  Generic                 CoreSightTarget                                          builtin
-  cy8c64_sysap              Cypress                 cy8c64_sysap                                             builtin
-  cy8c64x5_cm0              Cypress                 cy8c64x5_cm0                                             builtin
+  Name                      Vendor                  Part Number               Families Source
+--------------------------------------------------------------------------------------------------------
+  cc3220sf                  Texas Instruments       CC3220SF                     builtin
+  cortex_m                  Generic                 CoreSightTarget              builtin
+  cy8c64_sysap              Cypress                 cy8c64_sysap                 builtin
+  cy8c64x5_cm0              Cypress                 cy8c64x5_cm0                 builtin
   ......
 ```
 
