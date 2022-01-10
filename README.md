@@ -22,8 +22,10 @@ ELF DAPLink 用户手册
     * [Keil中无法找到调试器](#keil中无法找到调试器)
     * [烧写时提示 Not a genuine ST Device](#烧写时提示-not-a-genuine-st-device)
     * [FLASH无法擦除等奇怪问题](#flash无法擦除等奇怪问题)
+* [pyOCD 下载](#pyocd-下载)
+  * [常用的 pyOCD 命令](#常用的-pyocd-命令)
 * [STC 免冷启动下载](#stc-免冷启动下载)
-  * [STC-ISP烧写](#STC-ISP烧写)
+  * [STC\-ISP烧写](#stc-isp烧写)
   * [烧写波特率选择](#烧写波特率选择)
 * [附录](#附录)
   * [Keil开发中常见的非调试问题](#keil开发中常见的非调试问题)
@@ -315,7 +317,7 @@ JTAG为标准5线协议，也即必须使用调试器的RST连接目标板的RST
 
  程序错误导致跑飞，也有可能导致SWD/JTAG调试模块异常。
 
-# pyOCD
+# pyOCD 下载
 
 [pyOCD](https://github.com/pyocd/pyOCD) 是 ARM 公司开源的调试器上位机软件，它基于 Python 语言开发，跨平台，易使用。它同样使用跨平台的 [libusb](https://libusb.info) 库来访问调试器。相对于第三方开源软件 [OpenOCD](https://openocd.org)，它对基于 ARM 公司 CMSIS-DAP 协议的 DAPLink 调试器支持更好，烧写速度更快。但是 OpenOCD 上位机的调试功能更强大。如果只是用于烧写，推荐使用 pyOCD。
 
