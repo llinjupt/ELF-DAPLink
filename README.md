@@ -6,9 +6,9 @@
 * [环境要求](#环境要求)
 
 * [驱动安装](#驱动安装)
-  * [DAPLink v2 驱动安装](##DAPLink v2 驱动安装)
-  * [DAPLink v1 驱动安装](##DAPLink v1 驱动安装)
-  * [DAPLink 功能验证](##DAPLink 功能验证)
+  * [DAPLink v2 驱动安装](##DAPLink-v2-驱动安装)
+  * [DAPLink v1 驱动安装](##DAPLink-v1-驱动安装)
+  * [DAPLink 功能验证](##DAPLink-功能验证)
   * [虚拟串口功能验证](##虚拟串口功能验证)
   
 * [版本切换和模式选择](#版本切换和模式选择)
@@ -21,13 +21,13 @@
     * [调试时没有直接跳到main函数](###调试时没有直接跳到main函数)
     * [调试时有些代码行不能设置断点](###调试时有些代码行不能设置断点)
     * [C语言窗口无法设置断点](###C语言窗口无法设置断点)
-    * [调试或烧写时弹出RDDI-DAP ERROR错误](###调试或烧写时弹出RDDI-DAP ERROR错误)
+    * [调试或烧写时弹出RDDI-DAPERROR错误](###调试或烧写时弹出RDDI-DAP-ERROR错误)
     * [程序配置导致的调试失败](###程序配置导致的调试失败)
     * [Keil中无法找到调试器](###Keil中无法找到调试器)
-    * [烧写时提示 Not a genuine ST Device](###烧写时提示 Not a genuine ST Device)
+    * [烧写时提示 Not a genuine ST Device](###烧写时提示-Not-a-genuine-ST-Device)
     * [FLASH无法擦除等奇怪问题](###FLASH无法擦除等奇怪问题)
   
-* [STC 免冷启动下载](#STC 免冷启动下载)
+* [STC 免冷启动下载](#STC-免冷启动下载)
   * [注意事项](##注意事项)
   * [STC-ISP烧写](###STC-ISO烧写)
   * [烧写波特率选择](##烧写波特率选择)
@@ -35,11 +35,11 @@
 * [附录](#附录)
   * [Keil开发中常见的非调试问题](##Keil开发中常见的非调试问题)
   	* [代码浏览右击不能自动跳转](###代码浏览右击不能自动跳转)
-    * [Encountered an improper argument](###Encountered an improper argument)
+    * [Encountered an improper argument](###Encountered-an-improper-argument)
     
 # 产品概述
 
-<font color=red size=4>**ELF DAPLink **</font>是 `BiTForest` 推出的基于[ARM开源DAPLink](https://github.com/ARMmbed/DAPLink)的调试器和下载器，支持基于 ARM Cortex-M 核的全系列MCU的调试和下载。ELF DAPLink 在开源功能的基础上对底层协议进行了高度优化，在硬件上做到 DAPLink v1 和 v2 版本兼容，并支持3V3和5V。相比当前市面上流行的 STLinkv2 和 JLink OB，在 ARM 的 Keil MDK 开发环境下测试可以达到 STLinkV3 的烧录速度，与此同时支持国产芯片，而 STLinkV3 只能支持 STM32 系列芯片。
+<font color=red size=4>**ELF DAPLink**</font>是 **BiTForest** 推出的基于[ARM DAPLink](https://github.com/ARMmbed/DAPLink)的调试器和下载器，支持基于 ARM Cortex-M 核的全系列MCU的调试和下载。ELF DAPLink 在开源功能的基础上对底层协议进行了高度优化，在硬件上做到 DAPLink v1 和 v2 版本兼容，并支持3V3和5V。相比当前市面上流行的 STLinkv2 和 JLink OB，在 ARM 的 Keil MDK 开发环境下测试可以达到 STLinkV3 的烧录速度，与此同时支持国产芯片，而 STLinkV3 只能支持 STM32 系列芯片。
 
 速度的提升，在开发大FLASH的MCU时，将节约大量的下载等待时间，对于一个开发组，一个公司将大大提高开发效率。在功能上，另一大亮点是支持 STC 免冷启动下载功能，这对于初学者，比如在校生，爱好者或者同时需要开发<font color=red size=4>**ARM单片机和STC单片机**</font>的开发学习者无疑带来了极大便利。
 
@@ -343,7 +343,7 @@ ELF DAPLink 板载STC下载器使用单独的3V3电源芯片对外供电，可�
 
 可用万用表等设备测试目标板的实际电流需求。通常对于没有高耗电外设的开发板，可直接使用下载器供电。如果目标板工作在3V3，而提供了5V输入接口，优先使用5V供电，直接连接下载器的5V到目标的5V排针端子上。 
 
-注意：<font  color=red size=4>**任何时候都只能使用一种方式对目标板供电，要么使用下载器供电，要么使用开发板自带电源，而不要同时供电（也即在使用开发板自带电源供电时，不要连接下载器的3V3或者5V端子），否则会导致电流倒灌入下载器。注意：要实现免冷启动方式下载，必须使用本下载器供电。 **</font>
+注意：<font  color=red size=4>**任何时候都只能使用一种方式对目标板供电，要么使用下载器供电，要么使用开发板自带电源，而不要同时供电（也即在使用开发板自带电源供电时，不要连接下载器的3V3或者5V端子），否则会导致电流倒灌入下载器。注意：要实现免冷启动方式下载，必须使用本下载器供电。**</font>
 
 如果目标板具有屏幕，多路继电器等高耗电设备，要实现免冷启动下载，可以将高耗能外设的电源接口断开，另一种更保险的方式是使用外扩供电电路，把下载器的3V3/5V管脚作为控制端，当STC-ISP进行下载器，3V3/5V管脚会输出一段低电平，作为信号控制端控制外扩电路。 
 
