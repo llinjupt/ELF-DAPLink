@@ -23,7 +23,7 @@ ELF DAPLink 用户手册
     * [烧写时提示 Not a genuine ST Device](#烧写时提示-not-a-genuine-st-device)
     * [FLASH无法擦除等奇怪问题](#flash无法擦除等奇怪问题)
 * [STC 免冷启动下载](#stc-免冷启动下载)
-  * [STC\-ISP烧写](#stc-isp烧写)
+  * [STC-ISP烧写](#STC-ISP烧写)
   * [烧写波特率选择](#烧写波特率选择)
 * [附录](#附录)
   * [Keil开发中常见的非调试问题](#keil开发中常见的非调试问题)
@@ -31,22 +31,22 @@ ELF DAPLink 用户手册
 
 # 产品概述
 
-<font color=red size=4>**ELF DAPLink**</font>是 **BiTForest** 推出的基于[ARM DAPLink](https://github.com/ARMmbed/DAPLink)的调试器和下载器，支持基于 ARM Cortex-M 核的全系列MCU的调试和下载。ELF DAPLink 在开源功能的基础上对底层协议进行了高度优化，在硬件上做到 DAPLink v1 和 v2 版本兼容，并支持3V3和5V。相比当前市面上流行的 STLinkv2 和 JLink OB，在 ARM 的 Keil MDK 开发环境下测试可以达到 STLinkV3 的烧录速度，与此同时支持国产芯片，而 STLinkV3 只能支持 STM32 系列芯片。
+<font color=red size=4>**ELF DAPLink**</font> 是 **BiTForest** 推出的基于[ ARM DAPLink](https://github.com/ARMmbed/DAPLink) 的调试器和下载器，支持基于 ARM Cortex-M 核的全系列 MCU 的调试和下载。ELF DAPLink 在软件上对底层调试协议进行了高度优化，同时兼容 DAPLink v1 和 v2 版本兼容，并支持 3V3 和 5V。相比当前市面上流行的 STLinkv2 和 JLink OB，在 ARM 的 Keil MDK 开发环境下测试可以达到 STLinkV3 的烧录速度，与此同时支持国产芯片，而 STLinkV3 只能支持 STM32 系列芯片。
 
-速度的提升，在开发大FLASH的MCU时，将节约大量的下载等待时间，对于一个开发组，一个公司将大大提高开发效率。在功能上，另一大亮点是支持 STC 免冷启动下载功能，这对于初学者，比如在校生，爱好者或者同时需要开发<font color=red size=4>**ARM单片机和STC单片机**</font>的开发学习者无疑带来了极大便利。
+速度的提升，在开发大容量 FLASH 的 MCU 时，可以节约大量的下载等待时间，对于一个开发组，一个公司将大大提高开发效率。在功能上，针对国内用户，增加了 STC 免冷启动下载功能，这对于初学者，比如在校生，爱好者或者同时需要开发<font color=red size=4> **ARM 单片机和 STC 单片机**</font>的开发学习者无疑带来了极大便利。
 
- 和市面上的同类DAPLink相比，外观最大区别是：<font color=red size=4>**对外接口排针是2X6**</font>而不是 2X5，用于支持双虚拟串口。目前达到的功能和性能：
+ 和市面上的同类 DAPLink 相比，外观最大区别是：<font color=red size=4>**对外接口排针是 2X6 **</font>而不是 2X5，用于支持双虚拟串口。目前达到的功能和性能：
 
-1.	经过高度优化的基于Bulk协议的 ELF DAPLink v2 让性能达到 STLinkV3 (基于Keil环境，针对Cortex-M0/0+/3/4/7不同芯片的实际烧写测试)，远远超过STLinkv2。烧写STM32H743，1M FLASH只需28s(含擦除，烧写和校验时间)。(不同性能的PC对速度略有影响，但是不大)。
-2.	在支持Bulk版本的DAPLink v2的同时，支持HID 版本的DAPLink v1，只需要简单切换模式即可。有效兼容老版本的开发和下载软件，例如好用的烧写工具CoFlash。
-3.	支持双路虚拟串口，这就是为何排针使用2X6的原因。双路虚拟串口可以单独设置波特率，互不影响，支持常见的固定波特率9600到230400，相当于两个USB转TTL小板，远远满足日常调试打印需求。
+1.	经过高度优化的基于 Bulk 协议的 ELF DAPLink v2 让性能达到 STLinkV3 (基于Keil环境，针对Cortex-M0/0+/3/4/7不同芯片的实际烧写测试)，远远超过 STLinkv2。实测烧写 STM32H743VIT6，1M FLASH 只需 28s (含擦除，烧写和校验时间)。(不同性能的 PC 对速度略有影响，但是差别不大)。
+2.	在支持 Bulk 版本的 DAPLink v2 的同时，支持 HID 版本的 DAPLink v1，只需要简单切换模式即可。有效兼容老版本的开发和下载软件，例如好用的烧写工具 CoFlash。
+3.	支持双路虚拟串口，这就是为何排针使用 2X6 的原因。双路虚拟串口可以单独设置波特率，互不影响，支持常见的固定波特率 9600到 230400，相当于两个 USB 转 TTL 小板，远远满足日常调试打印需求。
 4.	同时支持 SWD 和 JTAG 协议。目前市面上常见的 DAPLink 均不支持 JTAG 协议。
-5.	支持SWD软复位，使用SWD下载时，无需连接RST线。（部分国产芯片实测不支持软复位)。
+5.	支持 SWD 软复位，使用 SWD 下载时，无需连接 RST 线。（部分国产芯片实测不支持软复位，此时需连接 RST)。
 6.	支持基于虚拟U盘的升级和用户模式功能配置，无需安装驱动和额外软件。支持升级时意外掉电防变砖。
-7.	支持3.3V和5V供电输出，带自恢复保险丝，3V3和5V不小心接地短路不会对调试器电路造成损害。
-7.	双LDO供电，输出3V3和调试器MCU的3V3由独立的LDO供电，更稳定，互干扰更小。3V3可稳定对外输出150mA。5V输出达300mA（实际可达450mA，为考虑安全可靠，限制为300mA）。通常的单片机最简电路只需要10-100mA的电流。
-8.	UART硬件兼容5V和3V3电平。
-9.	支持STC单片机的免冷启动下载功能。
+7.	支持 3V3 和 5V 供电输出，带自恢复保险丝，3V3 和 5V 不小心接地短路不会对调试器电路造成损害。
+7.	双 LDO 供电，输出 3V3 和调试器 MCU 的 3V3 由独立的 LDO 供电，更稳定，互干扰更小。3V3 可稳定对外输出 150mA。5V 输出达300mA（实际可达450mA，为考虑安全可靠，限制为300mA）。通常的单片机最简电路只需要 10-100mA 的电流。
+8.	UART 硬件兼容 5V 和 3V3 电平。
+9.	支持 STC 单片机的免冷启动下载功能。
 
 <font color=red size=4>**1 ELF DAPLink = 1 普通DAPLink + BULK高速下载 + 1 USB转TTL小板 + 1 STC免冷启动下载器。**</font>体积小巧，携带方便。之所以给它取名字叫ELF，意为小精灵，但人小鬼大，一个顶仨。
 
@@ -54,23 +54,25 @@ ELF DAPLink 用户手册
 
 基于 BULK 协议的 DAPLink v2 版本必须使用Keil MDK 5.26.2 或更高版本，IAR 8.32.1 或更高版本。基于 HID 协议的 DAPLink v1 版本无此要求。
 
-操作系统支持WIN7，WIN8和WIN10，WIN10 用户直接免驱动，即插即用。
+操作系统支持WIN7，WIN8和WIN10，WIN10 用户直接免驱动，即插即用。WIN10平台上查看设备列表，会列出 2 个串口设备和一个通用串行总线设备。<font color=red size=4>**注意小标号的 COM 口并不一定对应 RX/TX 接线端子。**</font> RX/TX 端子对应的虚拟串口在被终端打开时，信号灯会闪烁。
+
+![Windows10 Device List](./imgs/win10.png)
 
 # 驱动安装
 
-WIN10 用户直接免驱动，即插即用。以下操作请忽略。WIN8.1版本和WIN7用户需要按一下步骤安装驱动。
+WIN10 用户直接免驱动，即插即用。以下操作请忽略。WIN8.1 版本和 WIN7 用户需要按以下步骤安装驱动。
 
 ## DAPLink v2 驱动安装
 
-一个 ELF DAPLink 物理设备在电脑上会虚拟出三个设备，对应 DAPLink 调试器和两路虚拟串口。ELF DAPLink 默认出厂设置工作在 v2模式，此时需要针对此三个虚拟设备分别手动安装驱动。
+一个 ELF DAPLink 物理设备在 PC 上会虚拟出三个设备，对应 DAPLink 调试器和两路虚拟串口。ELF DAPLink 默认出厂设置工作在 v2 模式，此时需要针对此三个设备分别手动安装驱动。
 
-第一次将调试器插入计算机的USB口时，Windows7会自动尝试安装驱动，点击右下角的安装提示信息，会弹出如下窗口，直接关闭即可。
+第一次将调试器插入计算机的 USB 口时，Windows7 会自动尝试安装驱动，点击右下角的安装提示信息，会弹出如下窗口，直接关闭即可。
 
 ![first plugin](./imgs/first_plugin.png)
 
 
 
-打开设备管理器，可以看到以ELF开头的三个设备出现在“其他设备“列表中。如果设备出现在了其他地方，请右击卸载设备并同时卸载驱动，然后重新插拔调试器。
+打开设备管理器，可以看到以 ELF 开头的三个设备出现在“其他设备“列表中。如果设备出现在了其他位置，请右击卸载设备并同时卸载驱动，然后重新插拔调试器。
 
 ![device list](./imgs/device_list.png)
 
@@ -98,7 +100,7 @@ WIN10 用户直接免驱动，即插即用。以下操作请忽略。WIN8.1版�
 
 
 
-这里选择 ELF DAPLINK V2.inf 文件，对应虚拟串口则选择后缀为CDC0或者CDC1的inf文件。
+这里选择 ELF DAPLINK V2.inf 文件。
 
 ![manual install step5](./imgs/manual_install5.png)
 
@@ -118,33 +120,35 @@ WIN10 用户直接免驱动，即插即用。以下操作请忽略。WIN8.1版�
 
 
 
-然后按照相同步骤为虚拟串口 ELF DAPLink CDC0 和 ELF DAPLink CDC1 安装驱动，注意分别选择 ELF DAPLINK V2_CDC0.inf 和 ELF DAPLINK V2_CDC1.inf 文件。
+然后按照相同步骤为虚拟串口 ELF DAPLink CDC0 和 ELF DAPLink CDC1 安装驱动，注意 inf 文件分别对应 ELF DAPLINK V2_CDC0.inf 和 ELF DAPLINK V2_CDC1.inf 。
 
 ## DAPLink v1 驱动安装
 
-参考 [版本切换和模式选择](#版本切换和模式选择) 首先将设备切换为 v1 模式，然后在设备列表中会看到如下设备：
+参考 [版本切换和模式选择](#版本切换和模式选择) 首先将设备切换为 v1 模式，然后在设备列表中会出现如下设备：
 
 ![v1 device list](./imgs/v1_devlist.png)
 
-由于 DAPLink v1 版本使用HID协议，无需安装额外驱动，这里只需要为虚拟串口 CDC0 和 CDC1 安装驱动。按照DAPLink v2 的步骤，在选择inf文件时，分别选择 ELF DAPLINK V1_CDC0.inf 和 ELF DAPLINK V1_CDC1.inf 即可。安装完驱动后的设备列表如下所示：
+
+
+由于 DAPLink v1 版本的调试器设备使用HID协议，无需安装额外驱动，这里只需要为虚拟串口 CDC0 和 CDC1 安装驱动。按照 DAPLink v2 的步骤，在选择inf文件时，分别选择 ELF DAPLINK V1_CDC0.inf 和 ELF DAPLINK V1_CDC1.inf 即可。安装完驱动后的设备列表如下所示：
 
 ![v1 finished](./imgs/v1_finished.png)
 
 ##DAPLink 功能验证
 
-在Keil中打开任一ARM工程，在工程名称上右击选择"Options for..."。
+在 Keil MDK 中打开任一 ARM工程，在工程名称上右击选择"Options for..."。
 
 ![keil step1](./imgs/keil1.png)
 
 
 
-然后在"Debug"选项卡中选择"CMSIS-DAP Debugger"，然后点击"Settings"。
+然后在"Debug"选项卡中选择"CMSIS-DAP Debugger"，并点击"Settings"。
 
 ![keil step2](./imgs/keil2.png)
 
 
 
-此时可以看到已经识别出调试器，以及调试器的序列号和版本，如果连接有目标板，可以看到目标板上MCU的IDCODE等信息。
+此时可以看到已经识别出调试器，以及调试器的序列号和版本，如果连接有目标板，可以看到目标板上 MCU 的 IDCODE 等信息。
 
 ![keil step3](./imgs/keil3.png)
 
@@ -164,7 +168,7 @@ WIN10 用户直接免驱动，即插即用。以下操作请忽略。WIN8.1版�
 
 
 
-选择任一串口，并使用杜邦线短接RX/TX或者RX1/TX1。通常小标号的COM口对应调试器上的RX/TX，但这不是绝对的，RX/TX对应的COM口在终端打开串口时，信号灯会闪烁，RX1/TX1对应的COM口在打开时不会闪烁，请以此信号为准。
+选择任一串口，并使用杜邦线短接 RX/TX 或者 RX1/TX1。通常小标号的 COM 口对应调试器上的 RX/TX 端子，但这不是绝对的，RX/TX 对应的 COM 口在终端打开串口时，信号灯会闪烁，RX1/TX1 对应的COM口在打开时不会闪烁，请以此信号为准。
 
 此时选择发送会收到发送的数据，表明串口工作正常，同样方式测试另一路虚拟串口。注意波特率的选择，支持的波特率为9600-230400。
 
@@ -172,17 +176,17 @@ WIN10 用户直接免驱动，即插即用。以下操作请忽略。WIN8.1版�
 
 # 版本切换和模式选择
 
-ELF DAPLink支持用户模式和配置模式：
+ELF DAPLink 支持用户模式和配置模式：
 
-1.用户模式下支持DAPLink v2 和 DAPLink v1，默认模式为 DAPLink v2。两种版本下均可同时开启STC免冷启动烧写功能（部分版本支持，默认开启STC免冷启动烧写功能）。
+1.用户模式下支持 DAPLink v2 和 DAPLink v1，默认模式为 DAPLink v2。两种版本下均可同时开启 STC 免冷启动烧写功能（部分版本支持，默认开启 STC 免冷启动烧写功能）。
 
-2.配置模式下可以对用户模式下的功能进行使能和关闭。<font color=red size=4>**杜邦线短接GND和RST，重新上电设备进入配置模式。**</font>注意进入配置模式时，其他端子不要连线。
+2.配置模式下可以对用户模式下的功能进行使能和关闭。<font color=red size=4>**杜邦线短接 GND 和 RST，重新上电设备进入配置模式。**</font>注意进入配置模式时，其他端子不要连线。
 
 ![cfg](./imgs/cfg.png)
 
 首次进入配置模式需要较长时间安装虚拟U盘驱动，当正确显示出名称和容量时，可以进行配置操作。该模式下，不要直接插拔调试器，应通过右下角弹出设备后再插拔，否则下一次进入配置模式需要较长时间发现虚拟U盘。如果长时间没有出现U盘，或者没有显示出容量信息，请重新插拔调试器。 
 
-注意， U盘大小是虚拟的，没有真实的FLASH对应，它是用来升级和配置调试器的接口，不要使用该虚拟U盘存储任何用户文件。
+注意， U盘大小是虚拟的，没有真实的 FLASH 对应，它是用来升级和配置调试器的接口，不要使用该虚拟U盘存储任何用户文件。
 
 ## 功能配置
 
@@ -191,45 +195,47 @@ ELF DAPLink支持用户模式和配置模式：
 | 命令    | 功能说明                                                     |
 | ------- | ------------------------------------------------------------ |
 | hid=0/1 | hid=1 切换为 v1 版本，hid=0 切换为 v2 版本                   |
-| stc=0/1 | stc=1使能，stc=0关闭stc免冷启动下载。使能后调试器上电时信号指示灯会快闪一段时间。 |
+| stc=0/1 | stc=1 使能，stc=0 关闭 stc 免冷启动下载。使能后调试器上电时信号指示灯会快闪一段时间。 |
 
-如果平时无需使用STC免冷启动功能，可以选择关闭。
+如果平时无需使用 STC 免冷启动功能，可以选择关闭。
 
 所有命令均是英文模式输入。多条命令可以使用逗号分隔。例如创建文本文件 stcv1.txt，输入如下命令：
 
-`hid=1,stc=1`
+```hid=1,stc=1```
 
  该命令用于切换到 DAPLink v1 版本，同时使能 STC 免冷启动下载。编辑完毕后，在文本文件图标上右击选择发送到 ELF Updater，发送完毕后，调试器会自动重启。<font color=red size=4>**此时去掉短接线。配置信息在下次重新上电时保持有效。如果没有去掉短接线，下次上电后会再次进入配置模式。**</font>
 
 ## 系统升级
 
-与功能配置类似，首先进入配置模式，然后在需要升级的bin文件上右击发送到ELF Updater的虚拟U盘，升级成功后设备会自动重启，<font color=red size=4>**此时不要忘记去掉短接线。**</font>
+与功能配置类似，首先进入配置模式，然后在需要升级的 bin 文件上右击发送到 ELF Updater 的虚拟U盘，升级成功后设备会自动重启，<font color=red size=4>**此时不要忘记去掉短接线。**</font>
 
 ![update](./imgs/update.png)
 
 #指示灯说明
 
-ELF DAPLink 调试器上载有两颗LED，用于信号指示：
+ELF DAPLink 调试器上载有两颗 LED，用于信号指示：
 
 1.左侧LED是电源指示灯，上电后常亮。
 
-2.右侧LED是信号指示灯，被虚拟串口CDC0，STC免冷启动下载和调试功能复用。
+2.右侧LED是信号指示灯，被 RX/TX对应的串口，STC免冷启动下载和调试功能复用。
 
-| 信号指示灯 | 功能说明                              |
-| ---------- | ------------------------------------- |
-| 上电时快闪 | stc 免冷启动开启                      |
-| 快闪       | PC串口终端打开RX/TX对应的串口时，快闪 |
-| 常亮       | 调试器烧写或者调试进行时              |
+| 信号指示灯 | 功能说明                                 |
+| ---------- | ---------------------------------------- |
+| 上电时快闪 | stc 免冷启动开启                         |
+| 快闪       | PC 串口终端打开 RX/TX 对应的串口时，快闪 |
+| 常亮       | 调试器烧写或者调试进行时                 |
 
-部分开源软件，如OpenOCD在烧写完毕后可能不会关闭调试指示灯。
+部分开源软件，如 OpenOCD，PyOCD 等在烧写完毕后可能不会自动关闭调试指示灯。Keil MDK 在调试或者烧写结束时会自动关闭调试灯。该信号完全由上位机控制。
 
 # Keil下载和调试
 
 ## SWD软复位
 
-使用SWD协议下载时，可以不接RST线而实现下载后自动重启：
+使用 SWD 协议下载时，可以不连接 RST 线而实现下载后自动重启：
 
 ![keil cfg](./imgs/keil_cfg.png)
+
+
 
 注意一定要勾选Reset and Run，并注意下载算法与目标芯片是否一致，如果不一致则点击 Add 添加对应的FLASH下载算法。
 
@@ -237,9 +243,9 @@ ELF DAPLink 调试器上载有两颗LED，用于信号指示：
 
 
 
-某些国产替代芯片，例如GD, APM等可能不支持软复位，此时需要连接RST以实现下载后自动重启。有些丝印为STM32的芯片，如果IDCODE和原厂不一致，也应该连接RST，并注意FLASH下载算法的选择。
+某些国产替代芯片，例如 GD, APM 等可能不支持软复位，此时需要连接 RST 以实现下载后自动重启。有些丝印为 STM32 的芯片，如果IDCODE 和原厂不一致，也应该连接 RST，并注意 FLASH 下载算法的选择。
 
-注意：使用JTAG协议下载时，必须连接RST。
+注意：使用 JTAG 协议下载时，必须连接RST。
 
 ## Keil调试中可能遇到的问题
 
@@ -255,9 +261,9 @@ ELF DAPLink 调试器上载有两颗LED，用于信号指示：
 
 ### C语言窗口无法设置断点
 
-在Keil中，如果发现DAPLink只可以在汇编窗口设置断点，而不能在C语言窗口设置断点，这很可能是Debug配置（是基于其他调试器或者芯片的项目切换过芯片和调试器）不匹配导致。该现象通常出现在从他处直接复制工程的情景，如果是本地新建的工程通常不会出现该问题。 
+在Keil中，如果发现DAPLink只可以在汇编窗口设置断点，而不能在C语言窗口设置断点，这很可能是Debug配置（是基于其他调试器或者芯片的项目切换过芯片和调试器）不匹配导致。通常出现在打开从它处复制来的工程的时候，如果是本地新建的工程通常不会出现该问题。 
 
-解决方法：只要将工程目录下的 DebugConfig 文件夹删除，重新打开工程选择调试器并配置调试选项即可。
+解决方法：只要将工程目录下的 DebugConfig 文件夹删除，重新打开工程并重新配置调试器即可。
 
 ### 调试或烧写时弹出RDDI-DAP ERROR错误
 
@@ -308,6 +314,50 @@ JTAG为标准5线协议，也即必须使用调试器的RST连接目标板的RST
 根据芯片BOOT0/1的组合，进入ISP模式然后重新下载通常可以解决问题，仔细检查程序中是否有禁用SWD/JTAG，或者复用了这些管脚。
 
  程序错误导致跑飞，也有可能导致SWD/JTAG调试模块异常。
+
+# pyOCD
+
+[pyOCD](https://github.com/pyocd/pyOCD) 是 ARM 公司开源的调试器上位机软件，它基于 Python 语言开发，跨平台，易使用。它同样使用跨平台的 [libusb](https://libusb.info) 库来访问调试器。相对于第三方开源软件 [OpenOCD](https://openocd.org)，它对基于 ARM 公司 CMSIS-DAP 协议的 DAPLink 调试器支持更好，烧写速度更快。但是 OpenOCD 上位机的调试功能更强大。如果只是用于烧写，推荐使用 pyOCD。
+
+要使用 pyOCD，需要安装 [Python](https://www.python.org) 运行环境。首先到 [Python官方网站下载](https://www.python.org/downloads/) Winows 安装版本，在 WIN7 上推荐 Python3.7.2，更高版本可能无法安装。安装完毕后，进入 DoS，PowerShell 或者 git bash 窗口，通过 pip 命令安装 pyOCD： 
+
+```pip install pyocd```
+
+ 根据 WIN 系统 32/64bit，需要将对应的 libusb-xx.dll 复制到 Python 的安装目录，或者 Windows/system32下。
+
+## 常用的 pyOCD 命令
+
+查看调试器：
+
+```
+$ pyocd list
+  #   Probe                             Unique ID
+--------------------------------------------------------
+  0   BiTForest Inc. ELF CMSIS-DAP v2   22171263D041BC
+```
+
+列出支持的 MCU：
+
+```
+$ pyocd list -t
+  Name                      Vendor                  Part Number                  Families                    Source
+----------------------------------------------------------------------------------------------------------------------
+  cc3220sf                  Texas Instruments       CC3220SF                                                 builtin
+  cortex_m                  Generic                 CoreSightTarget                                          builtin
+  cy8c64_sysap              Cypress                 cy8c64_sysap                                             builtin
+  cy8c64x5_cm0              Cypress                 cy8c64x5_cm0                                             builtin
+  ......
+```
+
+ pyOCD 内置了一些支持的 MCU，如果需要调试或者烧写的 MCU 没有出现在自带列表中，需要使用 pack 子命令下载对应的 PACK，也可以使用 --pack 指定 PACK 文件。
+
+烧写命令，-f 参数指定烧写时频率：
+
+```
+$ pyocd flash -t STM32H743VITX STM32H743.bin -f 10M
+```
+
+更详细命令请参考[官方帮助文档](https://github.com/pyocd/pyOCD/tree/main/docs)。
 
 # STC 免冷启动下载
 
