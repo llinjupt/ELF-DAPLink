@@ -1,42 +1,10 @@
-# ELF DAPLink 用户手册
+<font size=7>**ELF DAPLink 用户手册**</font>
 [ 中文 | [English](./README_EN.md) ]
 
-* [产品概述](#产品概述) 
+[TOC]
 
-* [环境要求](#环境要求)
 
-* [驱动安装](#驱动安装)
-  * [DAPLink v2 驱动安装](##DAPLink-v2-驱动安装)
-  * [DAPLink v1 驱动安装](##DAPLink-v1-驱动安装)
-  * [DAPLink 功能验证](##DAPLink-功能验证)
-  * [虚拟串口功能验证](##虚拟串口功能验证)
-  
-* [版本切换和模式选择](#版本切换和模式选择)
 
-* [指示灯说明](##指示灯说明)
-
-* [Keil 下载和调试](##Keil下载和调试)
-  * [SWD软复位](##SWD软复位)
-  * [Keil调试中可能遇到的问题](##Keil调试中可能遇到的问题)
-    * [调试时没有直接跳到main函数](###调试时没有直接跳到main函数)
-    * [调试时有些代码行不能设置断点](###调试时有些代码行不能设置断点)
-    * [C语言窗口无法设置断点](###C语言窗口无法设置断点)
-    * [调试或烧写时弹出RDDI-DAPERROR错误](###调试或烧写时弹出RDDI-DAP-ERROR错误)
-    * [程序配置导致的调试失败](###程序配置导致的调试失败)
-    * [Keil中无法找到调试器](###Keil中无法找到调试器)
-    * [烧写时提示 Not a genuine ST Device](###烧写时提示-Not-a-genuine-ST-Device)
-    * [FLASH无法擦除等奇怪问题](###FLASH无法擦除等奇怪问题)
-  
-* [STC 免冷启动下载](#STC-免冷启动下载)
-  * [注意事项](##注意事项)
-  * [STC-ISP烧写](###STC-ISO烧写)
-  * [烧写波特率选择](##烧写波特率选择)
-  
-* [附录](#附录)
-  * [Keil开发中常见的非调试问题](##Keil开发中常见的非调试问题)
-  	* [代码浏览右击不能自动跳转](###代码浏览右击不能自动跳转)
-    * [Encountered an improper argument](###Encountered-an-improper-argument)
-    
 # 产品概述
 
 <font color=red size=4>**ELF DAPLink**</font>是 **BiTForest** 推出的基于[ARM DAPLink](https://github.com/ARMmbed/DAPLink)的调试器和下载器，支持基于 ARM Cortex-M 核的全系列MCU的调试和下载。ELF DAPLink 在开源功能的基础上对底层协议进行了高度优化，在硬件上做到 DAPLink v1 和 v2 版本兼容，并支持3V3和5V。相比当前市面上流行的 STLinkv2 和 JLink OB，在 ARM 的 Keil MDK 开发环境下测试可以达到 STLinkV3 的烧录速度，与此同时支持国产芯片，而 STLinkV3 只能支持 STM32 系列芯片。
@@ -68,7 +36,7 @@
 
 WIN10 用户直接免驱动，即插即用。以下操作请忽略。WIN8.1版本和WIN7用户需要按一下步骤安装驱动。
 
-## DAPLink-v2-驱动安装
+## DAPLink v2 驱动安装
 
 一个 ELF DAPLink 物理设备在电脑上会虚拟出三个设备，对应 DAPLink 调试器和两路虚拟串口。ELF DAPLink 默认出厂设置工作在 v2模式，此时需要针对此三个虚拟设备分别手动安装驱动。
 
