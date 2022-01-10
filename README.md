@@ -1,5 +1,5 @@
 # ELF DAPLink 用户手册
-[ [English](./README_EN.md) | 中文]
+[ 中文 | [English](./README_EN.md) ]
 
 * [产品概述](#产品概述) 
 
