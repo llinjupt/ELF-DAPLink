@@ -423,7 +423,7 @@ ELF DAPLink 板载STC下载器使用单独的3V3电源芯片对外供电，可�
 
 ![keil arg](./imgs/keil_arg.png)
 
-MDK偶尔会出现错误提示“***Error: Encountered an improper argument\***”。大概意思是说“错误：遇到不正确的参数”。出现这种情况时，对话框关掉之后会再次出现，只能使用任务管理器强制停止才行。
+MDK偶尔会出现错误提示“Error: Encountered an improper argument”。大概意思是说“错误：遇到不正确的参数”。出现这种情况时，对话框关掉之后会再次出现，只能使用任务管理器强制停止才行。
 
 参考：http://www.keil.com/support/docs/4036.htm
 
