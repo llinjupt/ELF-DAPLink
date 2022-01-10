@@ -419,9 +419,7 @@ ELF DAPLink 板载STC下载器使用单独的3V3电源芯片对外供电，可�
 
 ![browse code](./imgs/browse_code.jpg)
 
-###Encountered an improper argument
-
-
+### Encountered an improper argument
 
 ![keil arg](./imgs/keil_arg.png)
 
